@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    <div>
+        <div class="container mb-5">
+            <div class="row mb-5">
+
+                <a class="btn btn-primary btn-lg" href="{% url 'categories' %}" role="button">Show all Categories</a>
+            </div>
+        </div>
+
+        <div class="container mb-5">
+            <div class="row mb-5">
+                <a class="btn btn-primary btn-lg" href="{% url 'projects' %}" role="button">Show All Projects</a>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

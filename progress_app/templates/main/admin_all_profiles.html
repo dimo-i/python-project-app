@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div>
+        {% if profiles %}
+            <div class="container mb-5">
+                <div class="row mb-5">
+                    {% for prof in profiles %}
+                        <div class="col">
+                        <div class="card h-100">
+                            <img src="{{ prof.profile_picture }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text">Names: {{ prof }}</p>
+                                <p class="card-text">Email: {{ prof.email }}</p>
+                                <p class="card-text">Date Created: {{ prof.date_created }}</p>
+                                <p class="card-text">Description: {{ prof.description }}</p>
+                                <p class="card-text">Gender: {{ prof.gender }}</p>
+                            </div>
+                            <a href="{% url 'profile projects' prof.pk %}" class="btn btn-primary">Projects</a>
+                            <a href="#" class="btn btn-primary">Edit</a>
+                            <a href="#" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+        </div>
+        {% else %}
+            <div class="container mb-5">
+                <h2>No registered users at this stage...</h2>
+                <a href="{% url 'dashboard' %}" class="btn btn-primary">Go Back</a>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

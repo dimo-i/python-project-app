@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+    <div class="container mb-5">
+            <div class="row mb-5">
+            <h2>Ooops.... You are not allowed here!</h2>
+    </div>
+
+    </div>
+    <div class="container mb-5">
+            <div class="row mb-5">
+        <h2>.... and you should go back!</h2>
+    </div>
+    </div>
+    <div><h2><a href="{% url 'dashboard' %}">Okay...</a></h2></div>
+
+{% endblock %}

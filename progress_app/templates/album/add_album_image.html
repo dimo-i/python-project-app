@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    <h1 class="text-center">Add image to album </h1>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form method="POST" action="{% url 'add album image' project_id %}" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                {{ form }}
+
+                <button class="btn btn-primary mt-2" type="submit">Add</button>
+            </form>
+            <div>
+            <a href="{% url 'project details' project_id %}" class="btn btn-primary">Go Back To Details</a>
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+{% endblock %}

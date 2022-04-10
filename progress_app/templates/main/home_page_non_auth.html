@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+
+    <h1 class="display-4">Welcome to the Progress Center</h1>
+    <p class="lead">Share the progress of your projects</p>
+    <hr class="my-4">
+    <a href="{% url 'login user' %}" class="btn btn-lg btn-primary">Login</a>
+
+    <a href="{% url 'register user' %}" class="btn btn-lg btn-primary">Register</a>
+    <hr class="my-4">
+    <div class="flex-row">
+
+        <a href="{% url 'dashboard' %}" class="btn btn-lg btn-secondary">Enter Without Registration</a>
+
+    </div>
+
+{% endblock %}

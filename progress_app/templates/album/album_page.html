@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    <div id="carousel-example-lz" class="carousel slide carousel-fade" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for img in album %}
+                <li data-target="#carousel-example-lz" data-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            {% for el in album %}
+                <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %} ">
+                    <img class="d-block w-100" src="{{ el.album_image.url }}" alt="{{ forloop.counter0 }}">
+                    {% if el.image_description %}
+                    <div class="carousel-caption d-none d-md-block">
+                        <p>{{ el.image_description }}</p>
+                    </div>
+                {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carousel-example-lz" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-example-lz" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+
+    </div>
+    <div>
+        <div>
+            <a href="{% url 'project details' project_id %}" class="btn btn-primary">Go Back To Details</a>
+        </div>
+    {#        IS Authenticated#}
+        {% if is_owner %}
+            <div>
+                <a href="{% url 'add album image' project_id %}" class="btn btn-primary">Add Image</a>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

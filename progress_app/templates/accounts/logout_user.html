@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <h1 class="text-center">Take me back to Home page</h1>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+
+            <div class="flex-row">
+
+                <a href="{% url 'index' %}" class="btn btn-lg btn-primary">Go</a>
+
+            </div>
+
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+{% endblock %}

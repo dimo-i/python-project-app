@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <div class="container mb-5">
+        <h1 class="text-center">Create Your Profile</h1>
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="input-group flex-wrap: wrap">
+
+                <form method="POST" action="{% url 'register user' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-row">
+                            <div class="input-group" for="{{ field.id_for_label }}">{{ field.label }}</div>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="border-bottom-danger">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button class="btn btn-primary mt-2" type="submit">Create</button>
+                </form>
+            </div>
+            <p>
+                <span>I you already have user, click <a href="{% url 'login user' %}">here</a></span>
+            </p>
+        </div>
+    </div>
+{% endblock %}
