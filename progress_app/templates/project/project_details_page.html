@@ -2,18 +2,23 @@
 {% block page_content %}
     <div class="col mb-4">
         <div class="card">
-            <!-- Image -->
+
             <div class="view overlay">
                 <img class="card-img-top" src="{{ project.project_image.url }}" alt="Card image cap">
             </div>
         <div>
             {% if album %}
-                {% if self.request.user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                 <a href="{% url 'project album' project.pk %}" class="btn btn-primary">See More</a>
+            {% else %}
+                <p>
+                <span>If you want to see more of the project, click <a href="{% url 'register user' %}">here</a> to register</span>
+                </p>
                 {% endif %}
             {% endif %}
-            {% if is_owner %}
+            {% if is_owner or request.user.is_superuser%}
                 <a href="{% url 'add album image' project.pk %}" class="btn btn-primary">Add images to album</a>
+
             {% endif %}
         </div>
         </div>
@@ -21,16 +26,17 @@
         <div class="card-body">
             <h2 class="card-title">Project name: {{ project.name }}</h2>
             <h2 class="card-text">Category: {{ project.category }}</h2>
-        {#      +  IS Authenticated#}
-            {% if self.request.user.is_authenticated %}
-            <h2 class="card-text">Creator: <a href="{% url 'user details' user.pk %}">{{ user }}</a></h2>
+
+            {% if request.user.is_authenticated %}
+            <h2 class="card-text">Creator:{% if owner.is_active %} <a href="{% url 'user details' owner.pk %}">{{ owner }}</a>{% else %} User is no longer active{% endif %}</h2>
             {% endif %}
+
             {% if project.description %}
                 <h2 class="card-text">Description: {{ project.description }}</h2>
             {% endif %}
             <h2>Posted: {{ project.post_date }}</h2>
-{#        +IS Authenticated#}
-            {% if is_owner %}
+
+            {% if is_owner or request.user.is_superuser %}
                 <a href="{% url 'edit project' project.pk %}" class="btn btn-primary">Edit</a>
                 <a href="{% url 'delete project' project.pk %}" class="btn btn-danger">Delete</a>
             {% endif %}

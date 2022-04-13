@@ -17,7 +17,6 @@ class ProgressAppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin
         validators=(
             MinLengthValidator(USERNAME_MIN_LENGTH),
         ),
-
     )
 
     date_joined = models.DateTimeField(
@@ -25,8 +24,13 @@ class ProgressAppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin
     )
     is_staff = models.BooleanField(
         default=False,
-
     )
+
+    is_active = models.BooleanField(
+        default=True,
+        # editable=True,
+    )
+
 
     USERNAME_FIELD = 'username'
 
@@ -42,7 +46,7 @@ class Profile(models.Model):
     GENDERS = [
         ('Male', 'Male'),
         ('Female', 'Female'),
-        ('Do not show', 'Do not show'),
+        ('Other', 'Other'),
     ]
 
     first_name = models.CharField(
@@ -88,5 +92,15 @@ class Profile(models.Model):
         primary_key=True,
     )
 
+    is_active = models.BooleanField(
+        default=True,
+    )
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+    # TODO fix deletion(is_active not settled accordingly in user)
+    def delete(self):
+        self.is_active = False
+        self.user.is_active=False
+        self.save()

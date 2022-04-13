@@ -2,7 +2,7 @@ from django.contrib.auth import forms as auth_forms, get_user_model
 from django import forms
 
 from progress_app.accounts.models import Profile
-from progress_app.common.helpers import BootstrapFormMixin, DisabledFieldsFormMixin
+from progress_app.common.helpers import BootstrapFormMixin
 
 
 class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
@@ -78,20 +78,12 @@ class EditProfieForm(BootstrapFormMixin, forms.ModelForm):
         fields = ('first_name', 'last_name', 'profile_picture', 'email', 'description', 'gender')
 
 
-#TODO with Signals
-class DeleteProfileForm(BootstrapFormMixin, DisabledFieldsFormMixin, forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._init_bootstrap_form_controls()
-        self._init_disabled_fields()
-
-    # def save(self, commit=True):
-    #     projects = list(self.instance.user_id)
-    #
-    #     self.instance.delete()
-    #     return self.instance
+#TODO fix deletion(is_active not setled accordingly)
+class DeleteProfileForm(forms.ModelForm):
+    def save(self, commit=True):
+        self.instance.is_active=False
+        return self.instance
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'profile_picture', 'email', 'description', 'gender')
+        fields = ()

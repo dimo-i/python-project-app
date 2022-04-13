@@ -16,8 +16,8 @@
                                 <p class="card-text">Gender: {{ prof.gender }}</p>
                             </div>
                             <a href="{% url 'profile projects' prof.pk %}" class="btn btn-primary">Projects</a>
-                            <a href="#" class="btn btn-primary">Edit</a>
-                            <a href="#" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'edit user' prof.pk %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'delete user' prof.pk %}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                     {% endfor %}

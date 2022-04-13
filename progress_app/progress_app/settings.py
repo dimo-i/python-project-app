@@ -15,6 +15,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.urls import reverse_lazy
 
+from progress_app.utils import is_test
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -28,7 +30,6 @@ SECRET_KEY = 'django-insecure-6=v*3pdo)lmc=p%*7!oep%cv5^yor94y%*1fw4k5zcbp24c^s(
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost/',
     '127.0.0.1',
 ]
 
@@ -153,19 +154,23 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGGING_LEVEL = 'DEBUG'
+
+if is_test():
+    LOGGING_LEVEL = 'CRITICAL'
 
 LOGGING = {
     'version': 1,
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': LOGGING_LEVEL,
             'filters': [],
             'class': 'logging.StreamHandler',
         }
     },
     'loggers': {
         'django.db.backends': {
-            'level': 'DEBUG',
+            'level': LOGGING_LEVEL,
             'handlers': ['console'],
         }
     }

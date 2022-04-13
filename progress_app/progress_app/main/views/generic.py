@@ -29,7 +29,6 @@ class ProjectsPageView(views.ListView):
 
 
 
-
 class CategoriesPageView(views.ListView):
     model = Category
     template_name = 'category/categories.html'

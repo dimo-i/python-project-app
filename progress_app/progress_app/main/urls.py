@@ -2,7 +2,7 @@ from django.urls import path
 
 from progress_app.main.views.category import CreateCategoryView
 from progress_app.main.views.project import CreateProjectView, EditProjectView, ProjectDetailsView, DeleteProjectView, \
-    ProjectAlbumView, AddImageToAlbumView
+    ProjectAlbumView, AddImageToAlbumView, DeleteAlbumImageView
 from progress_app.main.views.generic import HomePageView, DashboardPageView, ProjectsPageView, CategoriesPageView, \
     ProjectsByCategoriesPageView, ProjectsByProfilesPageView
 
@@ -26,7 +26,11 @@ urlpatterns = (
     path('project/details/<int:pk>/', ProjectDetailsView.as_view() ,name = 'project details'),
 
     path('project/album/<int:pk>/', ProjectAlbumView.as_view(), name='project album'),
-    path('project/album/add/<int:pk>/', AddImageToAlbumView.as_view(), name='add album image'),
+
+    path('project/album/image/add/<int:pk>/', AddImageToAlbumView.as_view(), name='add album image'),
+
+    path('project/album/image/delete/<int:pk>/', DeleteAlbumImageView.as_view(), name='delete album image'),
+
 
 
 

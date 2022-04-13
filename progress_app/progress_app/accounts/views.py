@@ -1,6 +1,6 @@
 from django.contrib.auth import mixins as auth_mixin
 from django.contrib.auth.models import PermissionsMixin
-from django.http import Http404
+
 
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -9,7 +9,7 @@ from django.contrib.auth import views as auth_views, login
 from progress_app.accounts.forms import CreateProfileForm, EditProfieForm, DeleteProfileForm
 from progress_app.accounts.models import Profile
 from progress_app.common.helpers import SuperUserCheck
-from progress_app.main.models import Category, Project
+from progress_app.main.models import Project
 
 
 
@@ -44,10 +44,14 @@ class LogoutUserPageView(auth_mixin.LoginRequiredMixin, auth_views.LogoutView):
         return super().get_success_url()
 
 
-class ProfileDetailsPageView(auth_mixin.LoginRequiredMixin,  views.DetailView):
+
+#auth_mixin.PermissionRequiredMixin
+#Permission for presentation?
+class ProfileDetailsPageView(auth_mixin.LoginRequiredMixin, views.DetailView):
     model = Profile
     template_name = 'accounts/user_details.html'
     context_object_name = 'profile'
+    # permission_required = ('accounts.view_profile',)
 
 
     def get_context_data(self, **kwargs):
@@ -61,12 +65,13 @@ class ProfileDetailsPageView(auth_mixin.LoginRequiredMixin,  views.DetailView):
         })
         return context
 
-# auth_mixin.PermissionRequiredMixin
+#auth_mixin.PermissionRequiredMixin
+#Permission for presentation?
 class EditProfilePageView(auth_mixin.LoginRequiredMixin, views.UpdateView):
-    # permission_required = 'groups.account_moderator'
     model = Profile
     template_name = 'accounts/user_edit.html'
     form_class = EditProfieForm
+    # permission_required = ('accounts.can_change_profile',)
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -74,39 +79,15 @@ class EditProfilePageView(auth_mixin.LoginRequiredMixin, views.UpdateView):
 
     def get_success_url(self):
         pk = self.kwargs['pk']
-
         return reverse_lazy('user details', kwargs={'pk': pk})
 
-#TODO
-#auth_mixin.PermissionRequiredMixin
-class DeleteProfilePageView(auth_mixin.LoginRequiredMixin, views.DeleteView):
-    # permission_required = 'groups.account_moderator'
-    model = Profile
-    template_name = 'accounts/delete_user.html'
-    form_class = DeleteProfileForm
-
-    success_url = reverse_lazy('dashboard')
-
-    def test_func(self, queryset=None):
-        obj = super(DeleteProfilePageView, self).get_object()
-        if not obj.owner == self.request.user:
-            raise Http404
-        return obj
 
 
-
-    def get_success_url(self):
-        if self.success_url:
-            return self.success_url
-        return super().get_success_url()
-
-
-#TODO - only of admins/staff users
+#Only of admins/staff users
 class ShowAllProfilesPageView(auth_mixin.LoginRequiredMixin, SuperUserCheck, views.ListView):
     model = Profile
     template_name = 'main/admin_all_profiles.html'
     context_object_name = 'profiles'
-
     paginate_by = 3
 
     def get_context_data(self, **kwargs):
@@ -115,7 +96,21 @@ class ShowAllProfilesPageView(auth_mixin.LoginRequiredMixin, SuperUserCheck, vie
         return context
 
 
-#TODO
-# class ChangePasswordPageView(auth_mixin.LoginRequiredMixin):
-#     pass
 
+class ChangePasswordPageView(auth_mixin.LoginRequiredMixin, auth_views.PasswordChangeView):
+    template_name = 'accounts/user_change_pwd.html'
+    success_url=reverse_lazy('dashboard')
+
+
+# TODO fix deletion(is_active)
+# To avoid DataBase errors, only admin/permitted users will delete accounts+related projects
+class DeleteProfilePageView(auth_mixin.LoginRequiredMixin, auth_mixin.PermissionRequiredMixin, views.DeleteView):
+    model = Profile
+    template_name = 'accounts/delete_user.html'
+    permission_required = ('accounts.can_delete_profile',)
+    success_url = reverse_lazy('dashboard')
+
+    def get_success_url(self):
+        if self.success_url:
+            return self.success_url
+        return super().get_success_url()

@@ -3,7 +3,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 
 # Create your models here.
-from django.utils.text import slugify
+
 
 UserModel = get_user_model()
 
@@ -36,19 +36,12 @@ class Category(models.Model):
 class Project(models.Model):
     MIN_LENGTH = 5
     NAME_MAX_LENGTH = 100
-    SLUG_MAX_LENGTH = 100
     RELATED_NAME = 'projects'
 
     category = models.ForeignKey(
         Category,
         related_name=RELATED_NAME,
         on_delete=models.CASCADE,
-    )
-
-    slug = models.SlugField(
-        max_length=SLUG_MAX_LENGTH,
-        null=True,
-        blank=True,
     )
 
     name = models.CharField(
@@ -74,13 +67,10 @@ class Project(models.Model):
 
     user = models.ForeignKey(
         UserModel,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name)
-
         super(Project, self).save(*args, **kwargs)
 
     class Meta:
@@ -120,7 +110,6 @@ class ProjectAlbum(models.Model):
         ),
         blank=True,
         null=True,
-
     )
 
     def __str__(self):

@@ -12,11 +12,14 @@
             {% for el in album %}
                 <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %} ">
                     <img class="d-block w-100" src="{{ el.album_image.url }}" alt="{{ forloop.counter0 }}">
-                    {% if el.image_description %}
-                    <div class="carousel-caption d-none d-md-block">
+                <div class="carousel-caption d-md-block">
+                {% if el.image_description %}
                         <p>{{ el.image_description }}</p>
-                    </div>
                 {% endif %}
+                    {% if is_owner %}
+                    <p><a href="{% url 'delete album image' el.id %}">Delete Image</a></p>
+                    {% endif %}
+                </div>
                 </div>
             {% endfor %}
         </div>
@@ -34,7 +37,7 @@
         <div>
             <a href="{% url 'project details' project_id %}" class="btn btn-primary">Go Back To Details</a>
         </div>
-    {#        IS Authenticated#}
+
         {% if is_owner %}
             <div>
                 <a href="{% url 'add album image' project_id %}" class="btn btn-primary">Add Image</a>

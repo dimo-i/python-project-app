@@ -44,9 +44,11 @@
 
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
+            {% if not request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
             </li>
@@ -82,7 +84,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'user details' request.user.id %}">Profile
                                     Details</a>
-                                <a class="dropdown-item" href="#">Change Password</a>
+                                <a class="dropdown-item" href="{% url 'change password' %}">Change Password</a>
                             {% endif %}
 
                             <div class="dropdown-divider"></div>

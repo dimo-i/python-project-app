@@ -22,17 +22,17 @@
                         <a class="btn btn-primary btn-lg" href="{% url 'create project' %}">New Project</a>
                     </div>
                 {% endif %}
-                    <a href="{% url 'categories' %}" class="btn btn-primary">Go Back</a>
+                <a href="{% url 'categories' %}" class="btn btn-primary">Go Back</a>
             {% endif %}
         </h1>
 
         {% if projects %}
-{#            <div class="row row-cols-1 row-cols-md-3 g-4">#}
             <div class="row row-cols-3 row-cols-md-3 g-3">
                 {% for el in projects %}
                     <div class="col">
                         <div class="card h-100">
-                            <img src="{{ el.project_image.url }}" class="card-img-top" alt="..." style="width: auto; height: 195px;">
+                            <img src="{{ el.project_image.url }}" class="card-img-top" alt="..."
+                                 style="width: auto;">
                             <div class="card-body">
                                 <p class="card-text">{{ el.description }}</p>
                             </div>
@@ -41,7 +41,7 @@
                     </div>
                 {% endfor %}
             </div>
-                    <div class="pagination">
+            <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -57,7 +57,7 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-        </div>
+            </div>
         {% endif %}
     </div>
 

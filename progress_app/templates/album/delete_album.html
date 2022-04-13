@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<div class="row">
+        <div class="col-lg-12 text-center">
+    <h1 class="text-center">Are you Sure you want to Delete your Project?</h1>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form method="POST" action="{% url 'delete album' album.pk %}" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                      <input type="submit" value="Confirm" class="btn btn-danger"/>
+                    </form>
+                </div>
+                <div class="m-2">
+                    <a class="btn btn-primary" href="javascript:history.back()">No, go back</a>
+                </div>
+        </div>
+        <div class="col-lg-3"></div>
+        </div>
+        </div>
+{% endblock %}

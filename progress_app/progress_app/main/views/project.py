@@ -35,7 +35,12 @@ class ProjectDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
         context['is_owner'] = self.object.user_id == self.request.user.id
         context['album'] = ProjectAlbum.objects.filter(project_id=self.object.id)
-        context['user'] = Profile.objects.get(user_id=self.object.user_id).user
+
+        owner = Profile.objects.get(user_id=self.object.user_id).user
+        if owner.is_active:
+            context['owner'] = owner
+            
+        context['session_user'] = self.request.user
         return context
 
 
@@ -61,8 +66,6 @@ class EditProjectView(auth_mixin.LoginRequiredMixin, views.UpdateView):
 class DeleteProjectView(auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = Project
     template_name = 'project/delete_project.html'
-    # form_class = DeleteProjectForm -
-    # context_object_name = 'project'
 
 
     def get_success_url(self):
@@ -70,8 +73,6 @@ class DeleteProjectView(auth_mixin.LoginRequiredMixin, views.DeleteView):
 
 
 
-
-#TODO - album not visible when anonymous
 class ProjectAlbumView(auth_mixin.LoginRequiredMixin , views.ListView):
     model = ProjectAlbum
     template_name = 'album/album_page.html'
@@ -108,3 +109,11 @@ class AddImageToAlbumView(auth_mixin.LoginRequiredMixin, views.CreateView):
         return reverse_lazy('project album', kwargs={'pk': pk})
 
 #TODO delete ALbumImage/Album?
+#
+class DeleteAlbumImageView(auth_mixin.LoginRequiredMixin, views.DeleteView):
+    model = ProjectAlbum
+    template_name = 'album/delete_album_image.html'
+
+    def get_success_url(self):
+        pk = self.object.project_id
+        return reverse_lazy('project album', kwargs={'pk': pk})
