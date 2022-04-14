@@ -1,11 +1,56 @@
 
-from django.shortcuts import redirect
 from django.views import generic as views
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
 
 from progress_app.accounts.models import Profile
 from progress_app.common.view_mixin import RedirectToDashboard
 from progress_app.main.models import Project, Category
 
+
+from rest_framework import generics as api_views
+from rest_framework import serializers
+"""
+Try with REST
+==============================================
+"""
+# class ProjectListSerializer(serializers.ModelSerializer):
+#     project_image = serializers.ImageField(required=False)
+#     class Meta:
+#         model = Project
+#         fields=('id', 'name', 'category', 'description', 'user')
+#
+#
+# class ProjectsPageView(api_views.ListAPIView):
+#     # queryset = Project.objects.all()
+#     # serializer_class = ProjectListSerializer
+#     # pagination_class = 3
+#     renderer_classes = [TemplateHTMLRenderer]
+#     template_name = 'project/projects.html'
+#
+#
+#     def get(self, request):
+#         serializer_class = [ProjectListSerializer]
+#         queryset = Profile.objects.all()
+#         return Response({'serializer': serializer_class, 'projects': queryset})
+#
+#
+#
+# class CategoryListSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Category
+#         fields = ('id', 'name', 'category_image', 'category_description')
+#
+#
+# class CategoriesPageView(api_views.ListAPIView):
+#     queryset = Category.objects.all()
+#     serializer_class = CategoryListSerializer
+#
+
+
+"""
+===============================================================================
+"""
 
 class HomePageView(RedirectToDashboard, views.TemplateView):
     template_name = 'main/home_page_non_auth.html'

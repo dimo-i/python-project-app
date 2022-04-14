@@ -19,10 +19,10 @@ urlpatterns = (
     path('project/', ProjectsPageView.as_view(), name='projects'),
     path('project/create/', CreateProjectView.as_view(), name='create project'),
 
-    path('project/edit/<int:pk>/', EditProjectView.as_view(),name='edit project'),
+    path('project/edit/<int:pk>/', EditProjectView.as_view(), name='edit project'),
     path('project/delete/<int:pk>/', DeleteProjectView.as_view(), name='delete project'),
 
-    path('project/details/<int:pk>/', ProjectDetailsView.as_view() ,name = 'project details'),
+    path('project/details/<int:pk>/', ProjectDetailsView.as_view(), name='project details'),
 
     path('project/album/<int:pk>/', ProjectAlbumView.as_view(), name='project album'),
 
