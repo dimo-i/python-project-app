@@ -18,7 +18,6 @@
             {% endif %}
             {% if is_owner or request.user.is_superuser%}
                 <a href="{% url 'add album image' project.pk %}" class="btn btn-primary">Add images to album</a>
-
             {% endif %}
         </div>
         </div>

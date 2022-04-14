@@ -39,8 +39,7 @@ class ProjectDetailsView(views.DetailView):
         owner = Profile.objects.get(user_id=self.object.user_id).user
         if owner.is_active:
             context['owner'] = owner
-            
-        context['session_user'] = self.request.user
+
         return context
 
 
@@ -62,11 +61,9 @@ class EditProjectView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         return reverse_lazy('project details', kwargs={'pk': pk})
 
 
-#TODO
 class DeleteProjectView(auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = Project
     template_name = 'project/delete_project.html'
-
 
     def get_success_url(self):
         return reverse_lazy('dashboard')

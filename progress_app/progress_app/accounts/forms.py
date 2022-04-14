@@ -50,6 +50,11 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('username', 'password1', 'password2', 'first_name', 'last_name', 'profile_picture', 'description')
+        error_messages = {
+            'username': {
+                'unique': ("This username is already taken"),
+            },
+        }
         widgets = {
             'first_name': forms.TextInput(
                 attrs={

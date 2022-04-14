@@ -38,6 +38,11 @@ class EditProjectForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'description', 'project_image', 'category',)
+        error_messages = {
+            'name': {
+                'unique': ("Project with this name already exist"),
+            },
+        }
 
 
 #Current logic deletes the project without form?!?!
@@ -68,6 +73,11 @@ class CreateCategoryForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name', 'category_description', 'category_image', )
+        error_messages = {
+            'name': {
+                'unique': ("Category with this name already exist"),
+            },
+        }
 
 class CreateAlbumForm(BootstrapFormMixin, forms.ModelForm):
 

@@ -13,7 +13,6 @@ urlpatterns = (
     path('category/projects_cat/<int:pk>/', ProjectsByCategoriesPageView.as_view(), name='category projects'),
     path('category/projects_prfl/<int:pk>/', ProjectsByProfilesPageView.as_view(), name='profile projects'),
 
-    #path('category/delete/<int:pk>/') - only for admin
 
     path('dashboard/', DashboardPageView.as_view(), name='dashboard'),
 

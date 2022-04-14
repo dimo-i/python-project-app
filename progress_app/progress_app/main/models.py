@@ -14,6 +14,7 @@ class Category(models.Model):
     NAME_MAX_LENGTH = 50
     name = models.CharField(
         max_length=NAME_MAX_LENGTH,
+        unique=True,
         db_index=True,
     )
 
@@ -37,6 +38,7 @@ class Project(models.Model):
     MIN_LENGTH = 5
     NAME_MAX_LENGTH = 100
     RELATED_NAME = 'projects'
+    DEFAULT_UPLOAD_TO = 'project_images/'
 
     category = models.ForeignKey(
         Category,
@@ -52,7 +54,9 @@ class Project(models.Model):
         ),
     )
 
-    project_image = models.ImageField()
+    project_image = models.ImageField(
+        upload_to=DEFAULT_UPLOAD_TO,
+    )
 
 
     description = models.TextField(
@@ -85,7 +89,7 @@ class Project(models.Model):
 class ProjectAlbum(models.Model):
     IMG_DESCRIPTION_MIN_LENGTH = 5
     IMAGE_DESC_MAX_LENGTH = 300
-    DEFAULT_UPLOAD_TO = 'images/'
+    DEFAULT_UPLOAD_TO = 'album_images/'
 
     project = models.ForeignKey(
         Project,
