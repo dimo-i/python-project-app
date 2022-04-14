@@ -1,4 +1,3 @@
-
 from django.views import generic as views
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -45,7 +44,7 @@ Try with REST
 # class CategoriesPageView(api_views.ListAPIView):
 #     queryset = Category.objects.all()
 #     serializer_class = CategoryListSerializer
-#
+
 
 
 """
@@ -80,36 +79,40 @@ class CategoriesPageView(views.ListView):
     context_object_name = 'categories'
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filter'] = self.object_list
-
-        return context
 
 
 
 class ProjectsByCategoriesPageView(views.ListView):
+    paginate_by = 3
     model = Project
     template_name = 'project/projects.html'
-    paginate_by = 3
+    context_object_name = 'projects'
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Project.objects.filter(category_id=pk)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs['pk']
         category_name = Category.objects.get(id=pk)
         context['category'] = category_name
-        context['projects'] = self.object_list.filter(category_id=pk)
         return context
 
 
 class ProjectsByProfilesPageView(views.ListView):
     model = Project
     template_name = 'project/projects.html'
+    context_object_name = 'projects'
     paginate_by = 3
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Project.objects.filter(user_id=pk)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs['pk']
         context['profile'] = Profile.objects.get(user=pk).user
-        context['projects'] = Project.objects.filter(user_id=pk)
         return context

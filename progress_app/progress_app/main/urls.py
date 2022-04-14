@@ -11,13 +11,15 @@ urlpatterns = (
     path('category/', CategoriesPageView.as_view(), name='categories'),
     path('category/create/', CreateCategoryView.as_view(), name='create category'), # only for admin
     path('category/projects_cat/<int:pk>/', ProjectsByCategoriesPageView.as_view(), name='category projects'),
-    path('category/projects_prfl/<int:pk>/', ProjectsByProfilesPageView.as_view(), name='profile projects'),
 
 
     path('dashboard/', DashboardPageView.as_view(), name='dashboard'),
 
     path('project/', ProjectsPageView.as_view(), name='projects'),
     path('project/create/', CreateProjectView.as_view(), name='create project'),
+
+    path('project/projects_prfl/<int:pk>/', ProjectsByProfilesPageView.as_view(), name='profile projects'),
+
     path('project/edit/<int:pk>/', EditProjectView.as_view(), name='edit project'),
     path('project/delete/<int:pk>/', DeleteProjectView.as_view(), name='delete project'),
 
