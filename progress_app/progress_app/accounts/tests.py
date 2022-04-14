@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 
 from progress_app.accounts.models import Profile
+from progress_app.accounts.views import ShowAllProfilesPageView
 from progress_app.main.models import Project, Category, ProjectAlbum
 
 UserModel = get_user_model()
@@ -16,7 +17,7 @@ UserModel = get_user_model()
 class ProfileDetailsPageViewTest(django_test.TestCase):
     VALID_USER_CREDENTIALS = {
         'username': 'TestUser',
-        'password': '123456qwer'
+        'password': '123456qwer',
     }
 
     VALID_PROFILE_DATA = {
@@ -140,6 +141,11 @@ class ProfileDetailsPageViewTest(django_test.TestCase):
     #
     #     self.assertRaises(, "This username is already taken")
 
+    def test_if_user_can_see_all_profiles_if_not_superuser__expect_to_be_403(self):
+        user, profile = self.__create_valid_user_and_profile()
+        self.client.login(**self.VALID_USER_CREDENTIALS)
+        response = self.client.get(reverse('all users'))
+        self.assertEqual(response.status_code, 403)
 
     def test_register_user_with_invalid_data(self):
         pass

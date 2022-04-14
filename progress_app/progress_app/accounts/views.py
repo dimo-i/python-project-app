@@ -90,11 +90,6 @@ class ShowAllProfilesPageView(auth_mixin.LoginRequiredMixin, SuperUserCheck, vie
     context_object_name = 'profiles'
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['profiles'] = Profile.objects.all()
-        return context
-
 
 
 class ChangePasswordPageView(auth_mixin.LoginRequiredMixin, auth_views.PasswordChangeView):

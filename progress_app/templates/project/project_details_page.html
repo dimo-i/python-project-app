@@ -24,17 +24,19 @@
 
         <div class="card-body">
             <h2 class="card-title">Project name: {{ project.name }}</h2>
-            <h2 class="card-text">Category: {{ project.category }}</h2>
-
-            {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
+            <h2 class="card-text">Category: <a href="{% url 'category projects' project.category_id %}">{{ project.category }}<a/></h2>
             <h2 class="card-text">Creator:{% if owner.is_active %} <a href="{% url 'user details' owner.pk %}">{{ owner }}</a>{% else %} User is no longer active{% endif %}</h2>
-            {% endif %}
 
             {% if project.description %}
                 <h2 class="card-text">Description: {{ project.description }}</h2>
             {% endif %}
             <h2>Posted: {{ project.post_date }}</h2>
-
+                {% else %}
+                <p>
+                <span>If you want to see more of the project, click <a href="{% url 'register user' %}">here</a> to register</span>
+                </p>r
+            {% endif %}
             {% if is_owner or request.user.is_superuser %}
                 <a href="{% url 'edit project' project.pk %}" class="btn btn-primary">Edit</a>
                 <a href="{% url 'delete project' project.pk %}" class="btn btn-danger">Delete</a>
