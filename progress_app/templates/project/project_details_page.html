@@ -10,10 +10,6 @@
             {% if album %}
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'project album' project.pk %}" class="btn btn-primary">See More</a>
-            {% else %}
-                <p>
-                <span>If you want to see more of the project, click <a href="{% url 'register user' %}">here</a> to register</span>
-                </p>
                 {% endif %}
             {% endif %}
             {% if is_owner or request.user.is_superuser%}
@@ -35,7 +31,7 @@
                 {% else %}
                 <p>
                 <span>If you want to see more of the project, click <a href="{% url 'register user' %}">here</a> to register</span>
-                </p>r
+                </p>
             {% endif %}
             {% if is_owner or request.user.is_superuser %}
                 <a href="{% url 'edit project' project.pk %}" class="btn btn-primary">Edit</a>

@@ -5,6 +5,7 @@
             <div class="container mb-5">
                 <div class="row mb-5">
                     {% for prof in profiles %}
+                        {% if prof.is_active %}
                         <div class="col">
                         <div class="card h-100">
                             <img src="{{ prof.profile_picture }}" class="card-img-top" alt="...">
@@ -20,6 +21,7 @@
                             <a href="{% url 'delete user' prof.pk %}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

@@ -35,8 +35,12 @@
                 {% if is_owner or request.user.is_superuser %}
                     <a href="{% url 'edit user' profile.pk %}" class="btn btn-primary">Edit</a>
                     <a href="{% url 'delete user' profile.pk %}" class="btn btn-danger">Delete</a>
+
                 {% endif %}
             </div>
         </div>
+<div>
+                    <a class="btn btn-primary" href="javascript:history.back()">Go back</a>
+                    </div>
     </div>
 {% endblock %}

@@ -32,5 +32,8 @@ class DisabledFieldsFormMixin:
 
 class SuperUserCheck(auth_mixin.UserPassesTestMixin, views.View):
     def test_func(self):
-        return self.request.user.is_superuser
+        if self.request.user.is_superuser or self.request.user.is_staff:
+            return True
+
+
 

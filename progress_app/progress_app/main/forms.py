@@ -45,19 +45,6 @@ class EditProjectForm(BootstrapFormMixin, forms.ModelForm):
         }
 
 
-#Current logic deletes the project without form?!?!
-# class DeleteProjectForm(BootstrapFormMixin, DisabledFieldsFormMixin, forms.ModelForm):
-#
-#     def save(self, commit=True):
-#         Project.objects.filter(id=id)
-#         return self.instance
-#
-#     class Meta:
-#         model = Project
-#         fields = ('name', 'description', 'image', 'category',)
-
-
-
 class CreateCategoryForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

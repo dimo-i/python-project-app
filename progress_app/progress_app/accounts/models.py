@@ -16,6 +16,7 @@ class ProgressAppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin
         unique=True,
         validators=(
             MinLengthValidator(USERNAME_MIN_LENGTH),
+            validate_letters,
         ),
     )
 

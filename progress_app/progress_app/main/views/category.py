@@ -1,14 +1,9 @@
-from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixin
 
 from progress_app.common.helpers import SuperUserCheck
-from progress_app.main.views.forms import CreateCategoryForm
-
-#required login / super user required
-
-
+from progress_app.main.forms import CreateCategoryForm
 
 # @staff_member_required
 class CreateCategoryView(auth_mixin.LoginRequiredMixin, SuperUserCheck,views.CreateView):

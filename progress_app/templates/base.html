@@ -60,7 +60,7 @@
 
                 {% if request.user.is_authenticated %}
 
-                    {% if request.user.is_superuser %}
+                    {% if request.user.is_staff %}
                      <li class="nav-item">
                         <a class="nav-link" href="{% url 'create category' %}">Create Category</a> {# add photo #}
                     </li>
@@ -76,16 +76,15 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
 
-                            {% if  request.user.is_superuser %}
+                            {% if  request.user.is_staff %}
                                 <a class="dropdown-item" href="{% url 'all users' %}">Show all registered users</a>
-                            {% else %}
+                            {% endif %}
                                 <a class="dropdown-item" href="{% url 'profile projects' request.user.id %}">My
                                     Projects</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'user details' request.user.id %}">Profile
                                     Details</a>
                                 <a class="dropdown-item" href="{% url 'change password' %}">Change Password</a>
-                            {% endif %}
 
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout user' %}">Logout</a>

@@ -6,7 +6,7 @@ from django.contrib.auth import mixins as auth_mixin
 
 from progress_app.accounts.models import Profile
 from progress_app.main.models import Project, ProjectAlbum
-from progress_app.main.views.forms import CreateProjectForm, CreateAlbumForm, EditProjectForm
+from progress_app.main.forms import CreateProjectForm, CreateAlbumForm, EditProjectForm
 
 
 class CreateProjectView(auth_mixin.LoginRequiredMixin, views.CreateView):
@@ -82,6 +82,7 @@ class ProjectAlbumView(auth_mixin.LoginRequiredMixin , views.ListView):
         context['album'] = ProjectAlbum.objects.filter(project_id=pk)
         current_project_owner = Project.objects.get(id=pk).user_id
         context['is_owner'] = current_project_owner==self.request.user.id
+        context['owner'] = current_project_owner
         return context
 
 
@@ -105,8 +106,7 @@ class AddImageToAlbumView(auth_mixin.LoginRequiredMixin, views.CreateView):
         pk = self.kwargs['pk']
         return reverse_lazy('project album', kwargs={'pk': pk})
 
-#TODO delete ALbumImage/Album?
-#
+
 class DeleteAlbumImageView(auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = ProjectAlbum
     template_name = 'album/delete_album_image.html'
