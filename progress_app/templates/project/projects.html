@@ -33,7 +33,7 @@
                             <img src="{{ el.project_image.url }}" class="card-img-top" alt="..."
                                  style="width: auto;">
                             <div class="card-body">
-                                <p class="card-text">{{ el.description }}</p>
+                                <p class="card-text text-center">{{ el.name }}</p>
                             </div>
                             <a href="{% url 'project details' el.pk %}" class="btn btn-primary">See details</a>
                         </div>
