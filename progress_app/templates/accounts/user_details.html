@@ -26,7 +26,6 @@
                     {% if all_projects %}
                         <h5><strong>Total Projects:</strong> {{ total_projects_count }}</h5>
                         <h5><strong>All projects: </strong></h5>
-                        {#                       TODO admin should check everything#}
                         {% for proj in all_projects %}
                             <li><a href="{% url 'project details' proj.pk %}">{{ proj }}</a></li>
                         {% endfor %}

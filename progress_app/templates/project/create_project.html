@@ -7,8 +7,18 @@
         <div class="col-lg-6">
             <form method="POST" action="{% url 'create project'%}" enctype="multipart/form-data">
 
-                {{form}}
                 {% csrf_token %}
+                {% for field in form %}
+                        <div class="form-row">
+                            <div class="input-group" for="{{ field.id_for_label }}">{{ field.label }}</div>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="border-bottom-danger">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
 
                 <button class="btn btn-primary mt-2" type="submit">Create</button>
             </form>

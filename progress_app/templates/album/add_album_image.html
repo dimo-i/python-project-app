@@ -8,7 +8,17 @@
             <form method="POST" action="{% url 'add album image' project_id %}" enctype="multipart/form-data">
 
                 {% csrf_token %}
-                {{ form }}
+                {% for field in form %}
+                        <div class="form-row">
+                            <div class="input-group" for="{{ field.id_for_label }}">{{ field.label }}</div>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="border-bottom-danger">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
 
                 <button class="btn btn-primary mt-2" type="submit">Add</button>
             </form>
