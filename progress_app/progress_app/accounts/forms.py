@@ -82,13 +82,3 @@ class EditProfieForm(BootstrapFormMixin, forms.ModelForm):
         model = Profile
         fields = ('first_name', 'last_name', 'profile_picture', 'email', 'description', 'gender')
 
-
-#TODO fix deletion(is_active not setled accordingly)
-class DeleteProfileForm(forms.ModelForm):
-    def save(self, commit=True):
-        self.instance.is_active=False
-        return self.instance
-
-    class Meta:
-        model = Profile
-        fields = ()

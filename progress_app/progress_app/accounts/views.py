@@ -1,12 +1,10 @@
-from django.contrib.auth import mixins as auth_mixin
-from django.contrib.auth.models import PermissionsMixin
-
+from django.contrib.auth import mixins as auth_mixin, get_user_model
 
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, login
 
-from progress_app.accounts.forms import CreateProfileForm, EditProfieForm, DeleteProfileForm
+from progress_app.accounts.forms import CreateProfileForm, EditProfieForm
 from progress_app.accounts.models import Profile
 from progress_app.common.helpers import SuperUserCheck
 from progress_app.main.models import Project
@@ -98,12 +96,13 @@ class ChangePasswordPageView(auth_mixin.LoginRequiredMixin, auth_views.PasswordC
 
 
 # TODO fix deletion(is_active)
-# To avoid DataBase errors, only admin/permitted users will delete accounts+related projects
+# To avoid DataBase errors, only admin/permitted users will delete accounts(deactivate users/profiles) +related projects
 class DeleteProfilePageView(auth_mixin.LoginRequiredMixin, auth_mixin.PermissionRequiredMixin, views.DeleteView):
-    model = Profile
+    model = get_user_model()
     template_name = 'accounts/delete_user.html'
     permission_required = ('accounts.can_delete_profile',)
     success_url = reverse_lazy('dashboard')
+    context_object_name = 'profile'
 
     def get_success_url(self):
         if self.success_url:

@@ -32,6 +32,11 @@ class ProgressAppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin
         # editable=True,
     )
 
+    def delete(self):
+        self.is_active = False
+        self.profile.is_active = False
+        self.save()
+
 
     USERNAME_FIELD = 'username'
 
@@ -99,9 +104,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
-
-    # TODO fix deletion(is_active not settled accordingly in user)
-    def delete(self):
-        self.is_active = False
-        self.user.is_active=False
-        self.save()
