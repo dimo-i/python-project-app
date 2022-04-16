@@ -95,7 +95,7 @@ class ChangePasswordPageView(auth_mixin.LoginRequiredMixin, auth_views.PasswordC
     success_url=reverse_lazy('dashboard')
 
 
-# TODO fix deletion(is_active)
+
 # To avoid DataBase errors, only admin/permitted users will delete accounts(deactivate users/profiles) +related projects
 class DeleteProfilePageView(auth_mixin.LoginRequiredMixin, auth_mixin.PermissionRequiredMixin, views.DeleteView):
     model = get_user_model()

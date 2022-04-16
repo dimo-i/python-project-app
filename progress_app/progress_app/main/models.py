@@ -8,8 +8,6 @@ from django.db import models
 UserModel = get_user_model()
 
 
-#TODO DEFAULT VALUES
-
 class Category(models.Model):
     NAME_MAX_LENGTH = 50
     name = models.CharField(
@@ -30,9 +28,6 @@ class Category(models.Model):
         ordering = ('name',)
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
-
-
-#TODO DEFAULT VALUES
 
 class Project(models.Model):
     MIN_LENGTH = 5

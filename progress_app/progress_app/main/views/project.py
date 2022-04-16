@@ -44,12 +44,12 @@ class ProjectDetailsView(views.DetailView):
 
 
 
-
+#auth_mixin.PermissionRequiredMixin
 class EditProjectView(auth_mixin.LoginRequiredMixin, views.UpdateView):
     model = Project
     template_name = 'project/edit_project.html'
-    # context_object_name = 'project'
     form_class = EditProjectForm
+    # permission_required = ('main.can_change_project',)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -60,17 +60,18 @@ class EditProjectView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         pk = self.kwargs['pk']
         return reverse_lazy('project details', kwargs={'pk': pk})
 
-
+#auth_mixin.PermissionRequiredMixin
 class DeleteProjectView(auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = Project
     template_name = 'project/delete_project.html'
+    # permission_required = ('main.can_delete_project',)
 
     def get_success_url(self):
         return reverse_lazy('dashboard')
 
 
 
-class ProjectAlbumView(auth_mixin.LoginRequiredMixin , views.ListView):
+class ProjectAlbumView(auth_mixin.LoginRequiredMixin, views.ListView):
     model = ProjectAlbum
     template_name = 'album/album_page.html'
 
@@ -85,10 +86,11 @@ class ProjectAlbumView(auth_mixin.LoginRequiredMixin , views.ListView):
         context['owner'] = current_project_owner
         return context
 
-
+#auth_mixin.PermissionRequiredMixin
 class AddImageToAlbumView(auth_mixin.LoginRequiredMixin, views.CreateView):
     template_name = 'album/add_album_image.html'
     form_class = CreateAlbumForm
+    # permission_required = ('main.can_change_project_album',)
 
     def form_valid(self, form):
         form.instance.project_id = self.kwargs['pk']
@@ -106,10 +108,11 @@ class AddImageToAlbumView(auth_mixin.LoginRequiredMixin, views.CreateView):
         pk = self.kwargs['pk']
         return reverse_lazy('project album', kwargs={'pk': pk})
 
-
+#auth_mixin.PermissionRequiredMixin
 class DeleteAlbumImageView(auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = ProjectAlbum
     template_name = 'album/delete_album_image.html'
+    # permission_required = ('main.can_delete_project_album',)
 
     def get_success_url(self):
         pk = self.object.project_id
